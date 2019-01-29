@@ -110,6 +110,7 @@ namespace CongstarBalanceCheck
         {
             var oauth = GetOauth();
             var contentResult = GetContent(oauth);
+            Console.WriteLine(contentResult);
             var content = JsonConvert.DeserializeObject<Rootobject>(contentResult);
             if (content.Value == CurrentBalance)
                 return;
