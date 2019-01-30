@@ -72,8 +72,10 @@ namespace CongstarBalanceCheck
             {
                 webClient.DefaultRequestHeaders.Clear();
                 webClient.DefaultRequestHeaders.Add("Cookie", oauth);
-                var content = webClient.GetAsync($"https://www.congstar.de/customer-contracts/api/contracts/{ContractId}/balance").GetAwaiter().GetResult().Content.ReadAsStringAsync().GetAwaiter()
-                    .GetResult();
+                var response = webClient.GetAsync($"https://www.congstar.de/customer-contracts/api/contracts/{ContractId}/balance").GetAwaiter().GetResult();
+                Console.WriteLine(response.StatusCode);
+                Console.WriteLine(response.IsSuccessStatusCode);
+                var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                 return content;
             }
