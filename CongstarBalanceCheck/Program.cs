@@ -128,7 +128,7 @@ namespace CongstarBalanceCheck
             var contentResult = GetContent(oauth);
             Console.WriteLine(contentResult);
             var content = JsonConvert.DeserializeObject<Rootobject>(contentResult);
-            if (content.Value == CurrentBalance)
+            if (content.Value == CurrentBalance || string.IsNullOrEmpty(content.Value))
                 return;
 
             SendToPushoverApi(content.Value);
