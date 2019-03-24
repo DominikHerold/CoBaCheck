@@ -2,6 +2,6 @@
 {
     public class Rootobject
     {
-        public string Value { get; set; }
+        public string CurrentBalance { get; set; }
     }
 }

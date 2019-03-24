@@ -77,7 +77,7 @@ namespace CongstarBalanceCheck
                     var oauth = GetOauth();
                     webClient.DefaultRequestHeaders.Clear();
                     webClient.DefaultRequestHeaders.Add("Cookie", oauth);
-                    response = webClient.GetAsync($"https://www.congstar.de/customer-contracts/api/contracts/{ContractId}/balance").GetAwaiter().GetResult();
+                    response = webClient.GetAsync($"https://www.congstar.de/meincongstar/karte-aufladen/currentbalance?contractid={ContractId}").GetAwaiter().GetResult();
                     Console.WriteLine(response.StatusCode);
                     Console.WriteLine(response.IsSuccessStatusCode);
                 }
@@ -128,11 +128,11 @@ namespace CongstarBalanceCheck
             var contentResult = GetContent();
             Console.WriteLine(contentResult);
             var content = JsonConvert.DeserializeObject<Rootobject>(contentResult);
-            if (content.Value == CurrentBalance || string.IsNullOrEmpty(content.Value))
+            if (content.CurrentBalance == CurrentBalance || string.IsNullOrEmpty(content.CurrentBalance))
                 return;
 
-            SendToPushoverApi(content.Value);
-            CurrentBalance = content.Value;
+            SendToPushoverApi(content.CurrentBalance);
+            CurrentBalance = content.CurrentBalance;
         }
     }
 }
