@@ -67,13 +67,14 @@ namespace CongstarBalanceCheck
             throw new Exception("Can not authenticate");
         }
 
-        private static string GetContent(string oauth)
+        private static string GetContent()
         {
             using (var webClient = new HttpClient())
             {
                 HttpResponseMessage response;
                 do
                 {
+                    var oauth = GetOauth();
                     webClient.DefaultRequestHeaders.Clear();
                     webClient.DefaultRequestHeaders.Add("Cookie", oauth);
                     response = webClient.GetAsync($"https://www.congstar.de/customer-contracts/api/contracts/{ContractId}/balance").GetAwaiter().GetResult();
@@ -124,8 +125,7 @@ namespace CongstarBalanceCheck
 
         private static void CheckBalance()
         {
-            var oauth = GetOauth();
-            var contentResult = GetContent(oauth);
+            var contentResult = GetContent();
             Console.WriteLine(contentResult);
             var content = JsonConvert.DeserializeObject<Rootobject>(contentResult);
             if (content.Value == CurrentBalance || string.IsNullOrEmpty(content.Value))
