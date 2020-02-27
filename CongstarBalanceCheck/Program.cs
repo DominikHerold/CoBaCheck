@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -54,7 +55,7 @@ namespace CongstarBalanceCheck
             if (!isSetCookie || setCookies == null)
                 throw new Exception("Can not authenticate");
 
-            foreach (var setCookie in setCookies)
+            foreach (var setCookie in setCookies.Reverse())
             {
                 if (!setCookie.StartsWith("OAuth="))
                     continue;
