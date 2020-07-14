@@ -48,7 +48,7 @@ namespace CongstarBalanceCheck
         {
             var handler = new HttpClientHandler { AllowAutoRedirect = false };
             var client = new HttpClient(handler);
-            var toSend = @"{""username"":""" + UserName + @""",""password"":""" + Password + @""",""defaultRedirectUrl"":""/meincongstar"",""targetPageUrlOrId"":""""}";
+            var toSend = @"{""username"":""" + UserName + @""",""password"":""" + Password + @""",""defaultRedirectUrl"":""/meincongstar"",""targetPageUrlOrId"":"""",""recaptchaValue"":""-""}";
             var response = client.PostAsync("https://www.congstar.de/api/auth/login", new StringContent(toSend, Encoding.UTF8, "application/json")).GetAwaiter().GetResult();
             var isSetCookie = response.Headers.TryGetValues("Set-Cookie", out var setCookies);
 
